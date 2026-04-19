@@ -1,0 +1,6 @@
+# Crawl runtime state
+crawler/**/*_checkpoint.txt
+
+# Python bytecode cache
+__pycache__/
+*.pyc
