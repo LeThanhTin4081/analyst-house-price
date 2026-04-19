@@ -29,23 +29,24 @@ Notebook mở đầu bằng phần đọc dữ liệu và kiểm tra nhanh dữ 
 - Kiểm tra dữ liệu trùng lặp:
   - Notebook kết luận không có dòng nào bị trùng lặp hoàn toàn.
 - Phân tích giá trị thiếu toàn bộ dữ liệu:
-  - Không thiếu ở các cột: `Tiêu đề`, `Giá`, `Diện tích`, `Địa chỉ`, `Ngày đăng`, `Nguồn`.
-  - Thiếu rất nặng ở các cột: `Số phòng tắm` (96.8%), `Kích thước` (90.4%), `Mặt tiền` (76.5%), `Số tầng` (75.4%), `Loại BĐS` (75.1%), `Đường vào` (64.5%).
-  - Thiếu đáng chú ý ở các cột: `Chỗ để xe` (52.6%), `Số phòng vệ sinh` (48.4%), `Số phòng ngủ` (44.7%).
-  - `Giá/m2` được xem là có thể tính lại từ `Giá / Diện tích`.
+  - Gần như không thiếu ở các cột: `Tiêu đề`, `Giá`, `Diện tích`, `Địa chỉ`, `Ngày đăng`, `Nguồn`.
+  - Thiếu rất ít nhưng không phải bằng 0 ở: `Ngày đăng` (12 dòng), `Diện tích` (1 dòng), `Địa chỉ` (1 dòng).
+  - Thiếu rất nặng ở các cột: `Số phòng tắm` (96.88%), `Kích thước` (90.46%), `Mặt tiền` (76.59%), `Số tầng` (75.46%), `Loại BĐS` (75.14%), `Đường vào` (64.51%).
+  - Thiếu đáng chú ý ở các cột: `Chỗ để xe` (52.64%), `Giá/m2` (51.23%), `Số phòng vệ sinh` (48.48%), `Số phòng ngủ` (44.78%).
+  - `Giá/m2` có thể tính lại từ `Giá / Diện tích`, nhưng chỉ đúng với các dòng mà `Giá` đã được chuẩn hóa đúng sang số.
 - Phân tích giá trị thiếu theo từng nguồn:
   - `batdongsan`: thiếu hoàn toàn `Số phòng tắm`, `Số tầng`, `Chỗ để xe`, `Kích thước`, `Mặt tiền`, `Đường vào`, `Loại BĐS`.
   - `alonhadat`: thiếu hoàn toàn `Giá/m2`, `Số phòng vệ sinh`, `Số phòng tắm`, `Mặt tiền`, `Loại BĐS`.
-  - `meeyland`: thiếu hoàn toàn `Số phòng tắm`, `Số tầng`, `Chỗ để xe`, `Kích thước`, `Mặt tiền`, `Đường vào`, `Loại BĐS`.
-  - `nhadat24h`: đầy đủ nhất, chủ yếu thiếu `Giá/m2`, `Số phòng tắm`, `Kích thước`.
+  - `meeyland`: thiếu hoàn toàn `Số phòng vệ sinh`, `Số tầng`, `Chỗ để xe`, `Kích thước`, `Mặt tiền`, `Đường vào`, `Loại BĐS`; ngoài ra `Số phòng tắm` còn thiếu 45.41%.
+  - `nhadat24h`: đầy đủ hơn các nguồn khác nhưng vẫn thiếu nhiều ở `Giá/m2` (100%), `Số phòng tắm` (100%), `Kích thước` (100%), `Số phòng ngủ` (69.48%), `Số tầng` (59.34%), `Số phòng vệ sinh` (39.04%), `Mặt tiền` (36.11%), `Đường vào` (32.31%), `Loại BĐS` (32.13%).
 
 ### 2. Xây dựng các hàm tiền xử lý
 
 Notebook tự xây các hàm để chuẩn hóa dữ liệu thô về đúng kiểu dữ liệu:
 
 - Nhóm hàm chuẩn hóa số và số đo:
-  - `parse_number`: đọc chuỗi số có thể chứa cả dấu `.` và `,`.
-  - `clean_gia`: chuẩn hóa giá về VND, xử lý các đơn vị như `tỷ`, `triệu`, `k`, `nghìn`; các giá trị như `thỏa thuận`, `liên hệ` sẽ trả về `None`.
+  - `parse_number`: đọc chuỗi số có thể chứa cả dấu `.` và `,`, đồng thời cần phân biệt trường hợp dấu phân tách hàng nghìn với dấu thập phân theo ngữ cảnh.
+  - `clean_gia`: chuẩn hóa giá về VND, xử lý các đơn vị như `tỷ`, `triệu`, `k`, `nghìn`; các giá trị như `thỏa thuận`, `liên hệ` sẽ trả về `None`. Với dữ liệu thực tế, cần đặc biệt lưu ý các mẫu như `11,787 tỷ`, `1,035 tỷ`, `3 tỷ 386 triệu`.
   - `clean_dien_tich`: chuẩn hóa diện tích về số thực, hỗ trợ cả trường hợp `ha` sang `m2`.
   - `tach_kich_thuoc`: tách chuỗi kích thước dạng `rộng x dài` thành 2 cột số.
 - Nhóm hàm chuẩn hóa địa chỉ:
@@ -170,7 +171,9 @@ Notebook tiếp tục xử lý `NaN` còn sót lại trong `df_final`:
   - Notebook ghi nhận đã xóa 43 dòng thiếu `NgayDang`.
 - Nhận xét được ghi ngay trong notebook:
   - Sau bước này, dữ liệu số và thời gian đã sẵn sàng cho bước xử lý outlier.
+  - Sau khi điền `0`, dữ liệu chỉ còn thiếu ở `ThanhPho` với 36,231 dòng (~29.68%).
   - `ThanhPho` vẫn còn thiếu khá nhiều vì nhiều địa chỉ nguồn không ghi rõ `TP.HCM`.
+  - Việc điền `0` cho các cột số là chiến lược đơn giản để phục vụ EDA/báo cáo; nếu dùng cho modeling thì nên cân nhắc giữ `NaN` và tạo thêm cờ missing.
 
 ### 9. Kiểm tra outliers
 
@@ -209,6 +212,7 @@ Notebook tạo bản sao `df_before_outlier` rồi lọc outliers trên `df_fina
   - Chỉ xử lý khi nhóm có ít nhất 50 dòng.
   - Dùng ngưỡng phân vị `1% - 99%`.
 - Sau mỗi bước, notebook ghép lại dữ liệu và in ra số lượng dòng bị loại bỏ.
+- Vì bỏ qua nhóm `Không xác định`, dữ liệu cuối vẫn có thể còn lại một số giá trị cực lớn chưa được lọc hết.
 
 ### 11. Trực quan hóa outliers sau khi xử lý
 
@@ -218,11 +222,11 @@ Sau khi lọc outliers, notebook vẽ lại boxplot cho:
 - `DienTich`
 - `Gia_m2`
 
-Phần markdown trong notebook ghi lại một số nhận xét sau xử lý:
+Phần markdown sau xử lý nên diễn giải thận trọng hơn:
 
-- Outlier của `Gia` đã giảm mạnh, mức cực đại từ khoảng `10^13` xuống khoảng `10^12` VND.
-- `DienTich` sau lọc tập trung hơn ở nhóm diện tích thực tế, chủ yếu từ vài chục đến vài trăm `m²`.
-- `Gia_m2` vẫn còn outlier ở phía phải, nhưng mức cao nhất đã giảm mạnh so với trước xử lý.
+- Outlier đã giảm rõ ở các nhóm `Nhà`, `Đất`, `Căn hộ`, `Biệt thự`, nhưng chưa thể xem là đã sạch hoàn toàn trên toàn bộ file cuối.
+- `DienTich` sau lọc tập trung hơn ở nhóm diện tích thực tế, chủ yếu từ vài chục đến vài trăm `m²`, dù vẫn còn một số giá trị rất lớn ở nhóm chưa được lọc triệt để.
+- `Gia` và `Gia_m2` vẫn còn một số cực trị lớn, chủ yếu do nhóm `Không xác định` bị bỏ qua ở bước lọc percentile và do một số giá trị giá dạng text cần được parse chặt hơn.
 
 ### 12. Xuất kết quả
 
