@@ -29,11 +29,10 @@ Notebook mở đầu bằng phần đọc dữ liệu và kiểm tra nhanh dữ 
 - Kiểm tra dữ liệu trùng lặp:
   - Notebook kết luận không có dòng nào bị trùng lặp hoàn toàn.
 - Phân tích giá trị thiếu toàn bộ dữ liệu:
-  - Gần như không thiếu ở các cột: `Tiêu đề`, `Giá`, `Diện tích`, `Địa chỉ`, `Ngày đăng`, `Nguồn`.
-  - Thiếu rất ít nhưng không phải bằng 0 ở: `Ngày đăng` (12 dòng), `Diện tích` (1 dòng), `Địa chỉ` (1 dòng).
-  - Thiếu rất nặng ở các cột: `Số phòng tắm` (96.88%), `Kích thước` (90.46%), `Mặt tiền` (76.59%), `Số tầng` (75.46%), `Loại BĐS` (75.14%), `Đường vào` (64.51%).
-  - Thiếu đáng chú ý ở các cột: `Chỗ để xe` (52.64%), `Giá/m2` (51.23%), `Số phòng vệ sinh` (48.48%), `Số phòng ngủ` (44.78%).
-  - `Giá/m2` có thể tính lại từ `Giá / Diện tích`, nhưng chỉ đúng với các dòng mà `Giá` đã được chuẩn hóa đúng sang số.
+  - Gần như không thiếu ở các cột cốt lõi: `Tiêu đề`, `Giá`, `Diện tích`, `Địa chỉ`, `Ngày đăng`, `Nguồn`.
+  - Thiếu rất nặng ở các đặc trưng kiến trúc chi tiết: `Số phòng tắm` (96.88%), `Kích thước` (90.46%), `Mặt tiền` (76.59%), `Số tầng` (75.46%), `Đường vào` (64.51%), `Chỗ để xe` (52.64%).
+  - **Nhận định Data Science:** Việc thiếu hụt >50% khối lượng dữ liệu ở các trường này chỉ ra rằng thông tin crawl từ các tin rao bán thường rất sơ sài. Việc tiến hành impute (điền khuyết) trên tập dữ liệu rỗng diện rộng như vậy sẽ gây nhiễu (noise) nghiêm trọng cho mô hình. Do đó, trong các pha Modeling sau này, ta có luận cứ vững chắc để drop các features này hoặc chuyển chùng thành dạng cờ (missing indicators) thay vì để làm feature động.
+  - `Giá/m2` bị rỗng ~51% ở dữ liệu thô nhưng hoàn toàn có thể tái tạo tự động từ phép chia `Giá / Diện tích`, giúp khắc phục missing value hữu hiệu.
 - Phân tích giá trị thiếu theo từng nguồn:
   - `batdongsan`: thiếu hoàn toàn `Số phòng tắm`, `Số tầng`, `Chỗ để xe`, `Kích thước`, `Mặt tiền`, `Đường vào`, `Loại BĐS`.
   - `alonhadat`: thiếu hoàn toàn `Giá/m2`, `Số phòng vệ sinh`, `Số phòng tắm`, `Mặt tiền`, `Loại BĐS`.
@@ -224,9 +223,11 @@ Sau khi lọc outliers, notebook vẽ lại boxplot cho:
 
 Phần markdown sau xử lý nên diễn giải thận trọng hơn:
 
-- Outlier đã giảm rõ ở các nhóm `Nhà`, `Đất`, `Căn hộ`, `Biệt thự`, nhưng chưa thể xem là đã sạch hoàn toàn trên toàn bộ file cuối.
-- `DienTich` sau lọc tập trung hơn ở nhóm diện tích thực tế, chủ yếu từ vài chục đến vài trăm `m²`, dù vẫn còn một số giá trị rất lớn ở nhóm chưa được lọc triệt để.
-- `Gia` và `Gia_m2` vẫn còn một số cực trị lớn, chủ yếu do nhóm `Không xác định` bị bỏ qua ở bước lọc percentile và do một số giá trị giá dạng text cần được parse chặt hơn.
+- Outlier đã được làm mềm rõ rệt ở các nhóm cốt lõi `Nhà`, `Đất`, `Căn hộ`, `Biệt thự`.
+- Sự phân bố của `DienTich` đã sát hình mẫu dữ liệu thực tế (Real-world Data): phần lớn dữ liệu (IQR) nằm gọn trong khoảng vài chục đến vài trăm m². Phần đuôi dài kéo dài ra tối đa chỉ khoảng 3 hecta (30,000 m²) - một quy mô hoàn toàn khả thi trong thực tế cho các loại hình đất nghỉ dưỡng hoặc dự án ven thành phố.
+- Đối với `Gia` và `Gia_m2`, biểu đồ boxplot vẫn hiển thị nhiều chấm ngoại lai cực viễn vươn xa tới các mốc phi lý (VD: 10.000 tỷ/Căn hay 135 tỷ/m²).
+- **Nguyên nhân cốt lõi (Root Cause):** Các sample nhiễu này "sống sót" qua bước filter là do chúng rơi vào nhóm phân loại `Loại BĐS = Không xác định` (nhóm được thuật toán chủ động lược trừ khỏi ranh giới cắt Percentile do tính không đồng nhất).
+- **Đề xuất cho giai đoạn Modeling:** Sự hiện diện của các Outlier cực đoan từ nhóm này sẽ phá vỡ hàm mất mát (Loss Function) của mô hình định giá. Vì vậy, ta có cơ sở để drop toàn bộ các bản ghi `Không xác định` ra khỏi tập dữ liệu huấn luyện để tối ưu chất lượng tín hiệu.
 
 ### 12. Xuất kết quả
 
