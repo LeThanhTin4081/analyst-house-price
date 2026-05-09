@@ -4,7 +4,7 @@ Thư mục này lưu trữ toàn bộ dữ liệu phục vụ phân tích thị 
 
 ---
 
-## 1. Dữ liệu thô (`raw/`)
+## 1. Dữ liệu thô (raw data)
 
 Dữ liệu được crawl tự động từ 4 sàn giao dịch BĐS trực tuyến, chưa qua bất kỳ bước xử lý nào.
 
@@ -49,7 +49,7 @@ Dữ liệu được crawl riêng biệt từ 4 sàn, sau đó gộp thành file
 
 ---
 
-## 2. Dữ liệu đã xử lý (`processed/`)
+## 2. Dữ liệu đã xử lý (clean data)
 
 Bộ dữ liệu đã qua tiền xử lý và làm sạch, sẵn sàng phục vụ phân tích khám phá (EDA) và trực quan hóa trên Power BI.
 
