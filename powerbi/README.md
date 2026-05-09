@@ -1,149 +1,86 @@
-# Trực quan hóa dữ liệu trên Power BI
+# 📊 Trực quan hóa dữ liệu trên Power BI
 
-File dashboard: [Housing_Price_Analysis_2021_2025.pbix](./Housing_Price_Analysis_2021_2025.pbix)
+> 🔗 **Trải nghiệm trực tiếp:** [Báo cáo Power BI Public](https://app.powerbi.com/view?r=eyJrIjoiYTE3OWVkZWMtYzMzZi00N2IwLWE4MDMtOTdhNTQzNzM4YWQ4IiwidCI6ImVkOGYxNjczLTM4OTAtNGRiNC1hM2YwLTk3YWQ5NDI3Yzc0ZiIsImMiOjEwfQ%3D%3D&disablecdnExpiration=1778348335)
 
-> Bạn có thể truy cập phiên bản công khai của báo cáo để tương tác trực tiếp với các biểu đồ tại liên kết sau: [Báo cáo Power BI]()
 
-## Cấu trúc Dashboard
+## 📑 Cấu trúc thiết kế: Single-page Interactive Dashboard
 
-Báo cáo gồm **5 trang**, được thiết kế theo hướng đi từ **tổng quan → chi tiết từng phân khúc**:
+Thay vì thiết kế báo cáo nhiều trang rời rạc, tôi đã xây dựng hệ thống dưới dạng **Dashboard tương tác 1 trang duy nhất**. Bằng cách sử dụng hệ thống **Slicer (Bộ lọc)** và tính năng **Cross-filtering (Tương tác chéo)**, toàn bộ sức mạnh phân tích được nén vào một màn hình.
 
-| Trang | Nội dung |
-|---|---|
-| **Tổng quan** | Bức tranh toàn cảnh thị trường BĐS TP.HCM 2021–2025 |
-| **Biệt thự** | Phân tích chuyên sâu phân khúc hạng sang |
-| **Căn hộ** | Phân tích phân khúc căn hộ chung cư |
-| **Đất** | Phân tích phân khúc đất nền, đất thổ cư |
-| **Nhà** | Phân tích phân khúc nhà phố — chiếm tỷ trọng lớn nhất |
-
-Mỗi trang đều tích hợp **Year Filter (2021–2025)** để so sánh biến động theo thời gian, cùng hệ thống **Slicer** cho phép tương tác chéo giữa các biểu đồ.
+Người dùng chỉ cần thao tác click vào **Năm (2021-2025)** hoặc **Loại BĐS**, toàn bộ biểu đồ, KPI và Boxplot sẽ lập tức "nhảy" dữ liệu theo thời gian thực để đi sâu vào từng phân khúc.
 
 ---
 
-## Trang 1: Tổng quan thị trường
+## 🖼️ 1. Góc nhìn Tổng quan (Khi Slicer chọn "All")
 
-<!-- ![Tổng quan](./screenshots/tong_quan.png) -->
+![Góc nhìn Tổng quan](https://drive.google.com/uc?export=view&id=16wq-9_jMWz8XIvuCMrOr5zDs3XbBXSer)
 
-### KPI Cards
-
+### KPI Cards (Chỉ số tổng lượng)
 | Chỉ số | Giá trị |
 |---|---|
-| Tổng số tin đăng | **116.08K** |
-| Giá trung bình | **15.70 tỷ** |
-| Giá cao nhất | **850 tỷ** |
-
-**Insight:** Khoảng cách cực lớn giữa giá trung bình (15.70 tỷ) và giá cao nhất (850 tỷ) cho thấy thị trường bị lệch rất mạnh bởi sự tồn tại của các BĐS phân khúc siêu sang và các giá trị ngoại lai.
-
-### Phân tích theo vị trí địa lý
-
-- **Biểu đồ thanh ngang (Clustered Bar Chart):** Xếp hạng giá trung bình theo quận/huyện. Quận 1 dẫn đầu tuyệt đối (~54 tỷ), tiếp theo là Quận 3 (~39 tỷ), Quận 5 (~25 tỷ) và Quận 10 (~20 tỷ). Cuối bảng là Hóc Môn (~7 tỷ), Bình Chánh (~5 tỷ), Củ Chi (~4 tỷ).
-- **Treemap:** Bổ sung trực quan hóa, giúp nhận diện nhanh tỷ trọng giá trị của từng khu vực.
-
-**Insight:** Cả hai biểu đồ xác nhận **vị trí (đặc biệt các quận trung tâm) là yếu tố hàng đầu quyết định giá trị BĐS** tại TP.HCM.
-
-### Biến động giá theo thời gian
-
-- **Biểu đồ đường (Line Chart):** Trực quan hóa biến động giá trung bình từ 2022 đến 2025.
-
-**Insight:** Biểu đồ cho thấy sự biến động (volatility) rất cao, với nhiều "đỉnh nhọn" lên đến 50–100 tỷ. Điều này gợi ý có nhiều đợt sốt giá cục bộ, hoặc do dữ liệu đầu vào ở một số thời điểm chứa nhiều BĐS giá trị cao bất thường.
-
-### Phân tích theo loại hình BĐS
-
-- **Biểu đồ cột (Clustered Column Chart):** So sánh đơn giá trung bình/m² giữa các loại BĐS. Biệt thự (~180 triệu/m²) và Nhà (~152 triệu/m²) dẫn đầu. Căn hộ (~73 triệu/m²) và Đất (~70 triệu/m²) có mức giá tương đương nhau.
-- **Biểu đồ hộp (Box Plot):** Phân tích sâu sự phân bố giá trong từng loại hình.
+| Tổng số BĐS rao bán | **116.1K** |
+| Giá trung bình | **15.70 Tỷ VNĐ** |
+| Giá cao nhất (Max) | **850 Tỷ VNĐ** |
+> **🔑 Insight:** Khoảng cách khổng lồ giữa giá trung bình (15.70 tỷ) và giá cao nhất (850 tỷ) khẳng định thị trường TP.HCM bị kéo lệch mạnh bởi các BĐS siêu sang và giá trị ngoại lai (Outliers).
+### Phân tích Vị trí (Location)
+- **Treemap & Bar Chart:** Quận 1 dẫn đầu tuyệt đối về giá trị trung bình (~54.26 tỷ), tiếp đến là Quận 3 (~39.25 tỷ) và Quận 5 (~25.12 tỷ). Vị trí lõi trung tâm chính là thỏi nam châm quyết định toàn bộ giá trị BĐS, lấn át hoàn toàn các khu vực vùng ven.
+### Phân tích theo Loại hình BĐS (Property Type)
+- **Biểu đồ Cột (Column Chart):** So sánh đơn giá trung bình/m². Nhóm **"Không xác định"** (chưa phân loại) đội giá cao nhất (~238.8 triệu/m²). Xét trên các nhóm chuẩn, **Biệt thự** (~177.8 triệu/m²) và **Nhà phố** (~152.2 triệu/m²) là 2 phân khúc đắt đỏ nhất. Phân khúc **Căn hộ** (~73.5 triệu/m²) và **Đất** (~70.4 triệu/m²) ở mức giá sàn ngang bằng nhau.
+- **Biểu đồ Hộp (Box Plot):** Bóc tách độ phân tán giá trong từng loại hình (ảnh minh họa đang filter xem Box Plot của riêng nhóm Biệt thự), công cụ đắc lực giúp loại bỏ "ảo giác" của phép tính Trung bình cộng.
+### Biến động theo Dòng thời gian (Time-Series)
+- **Biểu đồ Đường (Line Chart 2021-2025):** Trực quan hóa toàn bộ dòng thời gian 5 năm. Đường xu hướng cho thấy thị trường không hề bằng phẳng mà biến động với Volatility (độ dao động) rất cao. Biểu đồ liên tục xuất hiện các "đỉnh nhọn" (Spikes) giật lên mốc 50–100 tỷ, phơi bày các đợt sốt giá cục bộ hoặc các thời điểm mà rổ hàng siêu sang đồng loạt được tung ra thị trường.
 
 ---
 
-## Trang 2: Phân khúc Biệt thự
+## ⏳ 2. Khám phá biến động qua các năm (Slicer 2021 - 2025)
+*(Hệ thống tự động render lại dữ liệu khi chọn Năm trên thanh Slicer)*
 
-<!-- ![Biệt thự](./screenshots/biet_thu.png) -->
+### 📍 Năm 2021 (Giai đoạn khởi điểm)
+![Dashboard 2021](https://drive.google.com/uc?export=view&id=1Yjp6iZrTlECnKxLStGAs-MqSqwzF8SAT)
+- **KPI:** Ghi nhận **1,456** BĐS. Giá trung bình **9.61 tỷ**, cao nhất **300 tỷ**.
+- **Vị trí & Loại hình:** Quận 1 (~41 tỷ) và Quận 3 (~33.3 tỷ) giữ ngôi vương trên Treemap. Về loại hình, **Biệt thự** vọt lên mốc rất cao (~159.8 triệu/m²), theo sau là Nhà phố (~121.7 triệu/m²). Căn hộ và Đất nền giao dịch ở mốc khá rẻ (chỉ xấp xỉ 37-41 triệu/m²).
+- **Thời gian:** Biểu đồ đường thưa thớt (do dữ liệu thu thập bắt đầu từ giữa năm), nhưng ghi nhận một đợt sốt giá (spike) cực kỳ dị biệt vào khoảng tháng 8/2021 giật lên mức 100 tỷ.
 
-| Chỉ số | Giá trị |
-|---|---|
-| Số tin đăng | **4,954** |
-| Giá trung bình | **41.07 tỷ** |
-| Giá cao nhất | **400 tỷ** |
+### 📍 Năm 2022 (Sự bùng nổ nguồn cung, giảm giá bán)
+![Dashboard 2022](https://drive.google.com/uc?export=view&id=1aSnOmxenwSbIEsOPkx8IRu9klHk4FB--)
+- **KPI:** Nguồn cung tăng gấp 4 lần lên **6,316** BĐS. Tuy nhiên, giá trung bình lại giảm xuống **7.83 tỷ**. Đỉnh giá đạt **470 tỷ**.
+- **Vị trí & Loại hình:** Giá trung bình tại Quận 1 hạ nhiệt xuống còn ~29.6 tỷ. Biệt thự và Nhà phố vẫn dẫn đầu đơn giá, nhưng Căn hộ đã rục rịch tăng giá lên mức ~52 triệu/m².
+- **Thời gian:** Line Chart biến động cực kỳ dữ dội từ tháng 6 đến tháng 12, báo hiệu dòng tiền thị trường luân chuyển rất mạnh. Cuối tháng 12 xuất hiện cú giật giá đột biến.
 
-**Insight:** Ngay cả trong cùng phân khúc Biệt thự, sự chênh lệch giá gấp 10 lần giữa trung bình và giá cao nhất cho thấy sự phân hóa cực kỳ mạnh mẽ — từ biệt thự liền kề bình dân đến biệt thự đơn lập siêu sang.
+### 📍 Năm 2023 (Chạm đáy & Thanh lọc)
+![Dashboard 2023](https://drive.google.com/uc?export=view&id=1vIrLzZpg2vop38wM5EvsdFyDYB5MCARi)
+- **KPI:** Nguồn cung giảm nhẹ còn **4,967** BĐS. Giá trung bình chạm đáy ở mức **6.65 tỷ** (thấp nhất trong chu kỳ 5 năm).
+- **Vị trí & Loại hình:** Sự suy giảm diện rộng thể hiện rõ khi Quận 1 rớt xuống chỉ còn ~18.6 tỷ/BĐS. Mức giá/m² của "Biệt thự" giảm sâu xuống ~147 triệu/m². 
+- **Thời gian:** Đường xu hướng đi ngang ở vùng đáy (low volume), thỉnh thoảng mới xuất hiện các giao dịch giá cao (spikes ~40-50 tỷ vào tháng 8 và tháng 11). Sự ách tắc thanh khoản thể hiện rõ rệt.
 
-- **Vị trí:** Quận 1 dẫn đầu (giá trung bình ~125 tỷ/căn), Quận 3 (~85 tỷ/căn), theo sau là Quận 5, Quận 10, Bình Thạnh.
+### 📍 Năm 2024 (Dòng tiền quay trở lại)
+![Dashboard 2024](https://drive.google.com/uc?export=view&id=1HSgflUKA8BmCyNJ3n0bCxMxOCAHTrzI5)
+- **KPI:** Nguồn cung bắt đầu tăng vọt, đạt **11.1K** BĐS. Giá trung bình phục hồi lên mức **9.32 tỷ**. Giá cao nhất thiết lập mốc mới **800 tỷ**.
+- **Vị trí & Loại hình:** Việc xuất hiện các tài sản siêu sang kéo theo khu vực lõi Quận 1 vọt lên lại mức ~33.7 tỷ/BĐS. Nhóm Biệt thự phục hồi mạnh mẽ (~188.2 triệu/m²), kéo theo sự nóng lên của Đất nền (~78.2 triệu/m²).
+- **Thời gian:** Mật độ Line Chart dày đặc hơn hẳn 2023. Giao dịch diễn ra đều đặn, tần suất xuất hiện các đợt giật giá cục bộ cao hơn, cho thấy phân khúc cao cấp đã rục rịch giao dịch.
 
----
-
-## Trang 3: Phân khúc Căn hộ
-
-<!-- ![Căn hộ](./screenshots/can_ho.png) -->
-
-| Chỉ số | Giá trị |
-|---|---|
-| Số tin đăng | **11.62K** |
-| Giá trung bình | **7.06 tỷ** |
-| Giá cao nhất | **150 tỷ** |
-
-**Insight:** Dù thường được xem là phân khúc ổn định, thị trường căn hộ vẫn có sự chênh lệch giá rất lớn (~21 lần) giữa trung bình và giá cao nhất, phản ánh sự phân hóa mạnh mẽ giữa căn hộ bình dân, cao cấp và penthouse.
-
-- **Vị trí:** Quận 1 dẫn đầu (~15 tỷ/căn), Bình Thạnh (~10 tỷ), Quận 3 (~9 tỷ), Thủ Đức (~8 tỷ).
-- **Mean vs Median:** Giá trung bình/m² là 73 triệu, nhưng Box Plot cho thấy 50% căn hộ có giá/m² tập trung trong khoảng 22–35 triệu, với trung vị chỉ ~28 triệu/m². **Giá trung bình đang bị các căn hộ cao cấp/penthouse kéo cao gấp gần 3 lần so với giá trị điển hình.**
-
----
-
-## Trang 4: Phân khúc Đất
-
-<!-- ![Đất](./screenshots/dat.png) -->
-
-| Chỉ số | Giá trị |
-|---|---|
-| Số tin đăng | **22.35K** |
-| Giá trung bình | **10.82 tỷ** |
-| Giá cao nhất | **700 tỷ** |
-
-**Insight:** Đây là phân khúc có sự chênh lệch giá lớn nhất (~65 lần), phản ánh sự đa dạng cực lớn về diện tích và vị trí (đất nền dự án, đất thổ cư trung tâm, đất nông nghiệp).
-
-- **Vị trí:** Quận 1 dẫn đầu tuyệt đối (~74 tỷ/lô).
-- **Mean vs Median:** Đây là phát hiện gây sốc nhất — Giá trung bình/m² là 70 triệu, nhưng 50% số lô đất có giá/m² chỉ trong khoảng 4–6.8 triệu, trung vị chỉ ~5 triệu/m². **Giá trung bình cao gấp 14 lần giá trung vị** — bằng chứng rõ ràng nhất về việc outlier bóp méo chỉ số trung bình.
+### 📍 Năm 2025 (Bùng nổ Nguồn cung & Giá)
+![Dashboard 2025](https://drive.google.com/uc?export=view&id=1ye5iheNi8FR3NI8oAXone59vkx61BKDL)
+- **KPI:** Nguồn cung bùng nổ chưa từng có với **92.2K** BĐS (chiếm phần lớn tổng tập dữ liệu). Giá trung bình vọt lên **17.59 tỷ**, mức cao kỷ lục.
+- **Vị trí & Loại hình:** Treemap cho thấy Quận 1 (~56.7 tỷ) và Quận 3 (~45.3 tỷ) kéo giãn khoảng cách tuyệt đối so với phần còn lại. Nhóm BĐS "Không xác định" và "Biệt thự" thống trị đơn giá.
+- **Thời gian:** Đường Line Chart cực kỳ đặc đặc và gai góc. Biên độ dao động (Volatility) đạt mức cực đại, minh chứng cho một thị trường hoạt động với cường độ cao nhất.
 
 ---
 
-## Trang 5: Phân khúc Nhà
+## 🔍 3. Phá vỡ định kiến "Giá Trung Bình" qua từng Phân Khúc
 
-<!-- ![Nhà](./screenshots/nha.png) -->
-
-| Chỉ số | Giá trị |
-|---|---|
-| Số tin đăng | **65.66K** (chiếm tỷ trọng lớn nhất) |
-| Giá trung bình | **16.30 tỷ** |
-| Giá cao nhất | **850 tỷ** |
-
-**Insight:** "Nhà" là danh mục rất rộng, bao gồm từ nhà trong hẻm, nhà mặt tiền đến các dinh thự — thậm chí có thể chứa các BĐS bị phân loại nhầm từ danh mục khác. Sự chênh lệch giá gấp ~52 lần giữa trung bình và giá cao nhất phản ánh tính đa dạng này.
-
-- **Vị trí:** Quận 1 (~51 tỷ/căn) và Quận 3 (~38 tỷ/căn) bỏ xa phần còn lại.
-- **Mean vs Median:** Giá trung bình/m² là 152 triệu, nhưng 50% số căn nhà có giá/m² trong khoảng 19–31 triệu, trung vị chỉ ~25 triệu/m². **Giá trung bình cao gấp 6 lần giá trung vị.**
+| Phân khúc | Tỷ trọng (Nguồn cung) | Giá Trung Bình / Max | Mean/m² | Median/m² | Chênh lệch | Insight cốt lõi (Phá vỡ định kiến) |
+|---|---|---|---|---|---|---|
+| **Biệt thự** | 4,954 | 41.07 tỷ / 400 tỷ | **178 tr** | **75 tr** | **× 2.4** | Phân hóa mạnh (Max gấp 10 lần TB). Khoảng cách lớn giữa biệt thự liền kề và đơn lập siêu sang tại Q1, Q3. |
+| **Căn hộ** | 11.62K | 7.06 tỷ / 150 tỷ | **73 tr** | **28 tr** | **× 2.6** | Giá TB bị kéo lệch bởi Penthouse. Thực tế 50% căn hộ chỉ dao động ở mức "vừa túi tiền" 22–35 triệu/m². |
+| **Nhà phố** | 65.66K *(Áp đảo)* | 16.30 tỷ / 850 tỷ | **152 tr** | **25 tr** | **× 6.0** | Phân khúc rộng nhất. Đơn giá trung bình bị thổi phồng bởi nhà mặt tiền các quận lõi trung tâm. |
+| **Đất nền** | 22.35K | 10.82 tỷ / 700 tỷ | **70 tr** | **5 tr** | **× 14.0** | **Cú sốc dữ liệu:** Outlier đất dự án trung tâm bóp méo hoàn toàn thực tế 50% lô đất nền chỉ có giá ~5 triệu/m². |
 
 ---
 
-## Phát hiện quan trọng nhất: Mean vs Median
+## 🛠️ 4. Kỹ thuật Power BI đã áp dụng
 
-Phân tích quan trọng nhất của dashboard đến từ việc kết hợp **Biểu đồ Cột** (giá trung bình) và **Biểu đồ Hộp** (giá trung vị) trên cùng một trang.
-
-| Phân khúc | Mean/m² | Median/m² | Tỷ lệ chênh lệch |
-|---|---|---|---|
-| **Đất** | 70 triệu | 5 triệu | **×14** |
-| **Nhà** | 152 triệu | 25 triệu | **×6** |
-| **Căn hộ** | 73 triệu | 28 triệu | **×2.6** |
-
-**Kết luận:** Việc chỉ sử dụng "Giá trung bình" (Mean) là cực kỳ sai lệch do ảnh hưởng của các giá trị ngoại lai. Box Plot là công cụ bắt buộc để hiểu đúng giá trị "điển hình" của một BĐS.
-
-## Các yếu tố ảnh hưởng giá được xác nhận
-
-Dashboard đã xác nhận một cách trực quan các yếu tố ảnh hưởng chính đến giá:
-
-- **Vị trí (QuanHuyen):** Yếu tố hàng đầu quyết định giá trị, với Quận 1 và Quận 3 luôn dẫn đầu trong mọi phân khúc.
-- **Loại hình (LoaiBDS):** Mỗi loại hình có phân bố giá hoàn toàn khác nhau, với Biệt thự và Nhà có giá trị/m² cao nhất.
-
-## Kỹ thuật Power BI đã sử dụng
-
-- **DAX Measures:** Xây dựng hệ thống measure tính toán giá trung bình, trung vị, giá cao nhất và đơn giá/m² để hỗ trợ phân tích đa chiều.
-- **Data Modeling:** Thiết lập mối quan hệ giữa các bảng dữ liệu, đảm bảo bộ lọc Year và Loại BĐS đồng bộ trên toàn bộ biểu đồ.
-- **Custom Visualization:** Kết hợp Treemap, Bar Chart, Line Chart, Column Chart và Box Plot trên cùng một trang để cung cấp góc nhìn đa chiều.
-- **Interactive Slicers:** Year Filter (2021–2025) và Loại BĐS Slicer cho phép người dùng tự khám phá dữ liệu theo nhu cầu.
-- **Cross-filtering:** Tính năng tương tác chéo giữa các biểu đồ cho phép lọc và phân tích chuyên sâu vào từng phân khúc cụ thể.
+- **Single-page Layout:** Nén khối lượng dữ liệu khổng lồ vào 1 trang duy nhất mà không gây nghẽn UI.
+- **DAX Measures:** Xây dựng hệ thống logic hàm để linh hoạt tính toán Mean, Median, Max và Đơn giá/m² dựa trên ngữ cảnh bộ lọc.
+- **Data Modeling (Star Schema):** Thiết lập cấu trúc quan hệ chuẩn xác để Slicer "Loại BĐS" và Slicer "Năm" có thể lan truyền bộ lọc mượt mà qua mọi visual.
+- **Tư duy phân tích kép:** Cố ý xếp cạnh nhau Biểu đồ Cột (Mean) và Box Plot (Median) để chứng minh cho người xem thấy "Bẫy thống kê" trong phân tích dữ liệu BĐS.
