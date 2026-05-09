@@ -18,6 +18,17 @@ Dự án thực hiện quy trình phân tích dữ liệu toàn diện (End-to-E
 
 Bộ dữ liệu gồm 163,571 tin đăng bán được thu thập từ 4 sàn giao dịch Bất Động Sản trực tuyến. Sau tiền xử lý, bộ dữ liệu phân tích gồm 116,875 bản ghi, bao phủ 4 phân khúc chính: Nhà · Đất · Căn hộ · Biệt thự trên toàn bộ 21 quận/huyện của TP.HCM.
 
+> 💡 **Lưu ý dành cho Nhà tuyển dụng / Technical Reviewer:**
+> File `README.md` này chỉ đóng vai trò là **Báo cáo Tổng quan (Executive Summary)** trình bày các phát hiện chính và luồng dự án.
+> Chi tiết về code và cách xử lý kỹ thuật cho từng giai đoạn (Crawl dữ liệu, Tiền xử lý, EDA và Power BI) đã được ghi chú rõ ràng trong từng thư mục như bảng sau: 
+
+| Phân khu | Mô tả | Liên kết |
+|---|---|---|
+| **Dữ liệu** | Cấu trúc dữ liệu raw/processed, data dictionary | [`data/`](./data/) |
+| **Web Crawling** | Kiến trúc crawler, kỹ thuật thu thập | [`crawler/`](./crawler/) |
+| **Tiền xử lý** | Pipeline làm sạch và chuẩn hóa dữ liệu | [`notebooks/preprocessing/`](./notebooks/preprocessing/) |
+| **EDA** | Phân tích khám phá, thống kê mô tả, tương quan | [`notebooks/eda/`](./notebooks/eda/) |
+| **Power BI** | Dashboard trực quan hóa, phân tích phân khúc | [`Link xem trực tiếp báo cáo`](https://app.powerbi.com/view?r=eyJrIjoiYTE3OWVkZWMtYzMzZi00N2IwLWE4MDMtOTdhNTQzNzM4YWQ4IiwidCI6ImVkOGYxNjczLTM4OTAtNGRiNC1hM2YwLTk3YWQ5NDI3Yzc0ZiIsImMiOjEwfQ%3D%3D) |
 ---
 
 ## 🔆 2. Kỹ năng phân tích dữ liệu được thể hiện
@@ -163,10 +174,3 @@ bds_hcm_project_data/
 └── README.md                   
 ```
 
-| Phân khu | Mô tả | Liên kết |
-|---|---|---|
-| **Dữ liệu** | Cấu trúc dữ liệu raw/processed, data dictionary | [`data/`](./data/) |
-| **Web Crawling** | Kiến trúc crawler, kỹ thuật thu thập | [`crawler/`](./crawler/) |
-| **Tiền xử lý** | Pipeline làm sạch và chuẩn hóa dữ liệu | [`notebooks/preprocessing/`](./notebooks/preprocessing/) |
-| **EDA** | Phân tích khám phá, thống kê mô tả, tương quan | [`notebooks/eda/`](./notebooks/eda/) |
-| **Power BI** | Dashboard trực quan hóa, phân tích phân khúc | [`Link xem trực tiếp báo cáo`](https://app.powerbi.com/view?r=eyJrIjoiYTE3OWVkZWMtYzMzZi00N2IwLWE4MDMtOTdhNTQzNzM4YWQ4IiwidCI6ImVkOGYxNjczLTM4OTAtNGRiNC1hM2YwLTk3YWQ5NDI3Yzc0ZiIsImMiOjEwfQ%3D%3D) |
