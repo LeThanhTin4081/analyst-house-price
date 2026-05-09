@@ -1,8 +1,9 @@
-# Exploratory Data Analysis — Thị trường BĐS TP.HCM
+# 📊 Exploratory Data Analysis — Thị trường BĐS TP.HCM
 
-Notebook chính: [eda_bds_hcm.ipynb](./eda_bds_hcm.ipynb)
+> **Xem chi tiết toàn bộ Source Code và Biểu đồ phân tích tại Notebook:** [`eda_bds_hcm.ipynb`](./eda_bds_hcm.ipynb)
 
-## Mục tiêu
+
+## 🔎 Mục tiêu
 
 Notebook này thực hiện phân tích khám phá (EDA) trên tập dữ liệu BĐS TP.HCM đã qua tiền xử lý, nhằm:
 
@@ -10,13 +11,13 @@ Notebook này thực hiện phân tích khám phá (EDA) trên tập dữ liệu
 - Nhận diện các vấn đề chất lượng dữ liệu còn tồn đọng (outlier, missing ẩn dưới giá trị 0, thiên lệch thời gian).
 - Rút ra các insight về thị trường để phục vụ cho giai đoạn trực quan hóa trên Power BI.
 
-## Dữ liệu đầu vào
+## 📂 Dữ liệu đầu vào
 
 - **File:** `data/processed/fulldata_clean_4web.csv`
 - **Shape:** 116,863 dòng × 19 cột
 - Dữ liệu đã được làm sạch và chuẩn hóa ở bước Preprocessing.
 
-## Các phần phân tích trong notebook
+## 📌 Các phần phân tích trong notebook
 
 ### 1. Thiết lập môi trường và khảo sát dữ liệu
 
@@ -78,7 +79,7 @@ Khảo sát xu hướng số lượng tin đăng theo thời gian.
 - Boxplot Giá trung vị theo quận cho thấy sự phân cực rõ rệt: Quận 1 dẫn đầu (~33 tỷ/căn), giảm dần qua các quận trung tâm, và thấp nhất ở các huyện ngoại thành Bình Chánh, Hóc Môn (~3.5 tỷ/căn).
 - So sánh Mean vs Median cho thấy tại một số quận (Quận 3, Bình Thạnh), trung bình bị kéo cao đáng kể bởi một số ít BĐS giá trị rất lớn, khiến Mean không phải thước đo phù hợp cho mặt bằng chung.
 
-## Kết luận và định hướng
+## 📌 Kết luận và định hướng
 
 EDA đã giúp nhận diện các đặc điểm quan trọng của tập dữ liệu:
 
